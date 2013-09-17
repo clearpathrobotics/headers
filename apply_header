@@ -16,6 +16,8 @@ fi
 # Either we recurse through every file in the current directory,
 # or we accept a list of the specific files to look at.
 if [[ "$1" == "--recurse" ]]; then
+  # TODO: Abort if this is not a source controlled directory, or
+  # it's a SCM directory with uncommitted changes.
   filenames=$(find . -not -path '*/\.*' -type f)
 else
   filenames=$*
