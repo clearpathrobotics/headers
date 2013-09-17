@@ -1,0 +1,88 @@
+#!/bin/bash
+#
+
+if [[ "$#" == "0" ]]; then
+  echo "Usages:"
+  echo "  apply_header file1 file2 .."
+  echo "  apply_header --recurse" 
+  exit 1
+fi
+
+if [[ "$HEADER_PATH" == "" ]]; then
+  echo "Please set \$HEADER_PATH environment variable."
+  exit 1
+fi
+
+# Either we recurse through every file in the current directory,
+# or we accept a list of the specific files to look at.
+if [[ "$1" == "--recurse" ]]; then
+  filenames=$(find . -not -path '*/\.*' -type f)
+else
+  filenames=$*
+fi
+
+for filename in ${filenames}; do
+  # Skip over directories and other non-regular files.
+  if [[ ! -f "${filename}" ]]; then
+    echo "Skipping non regular file: $filename"
+    continue
+  fi
+
+  base_filename=$(basename "$filename")
+  extension="${base_filename##*.}"
+
+  grep -qi "copyright" "$filename"
+  if [[ "$?" == "0" ]]; then
+    echo "Already contains copyright notice: $filename"
+    continue
+  fi
+
+  unset -v shebang
+  if [[ -x "$filename" ]]; then
+    # Executable file, get type from shebang
+    shebang=$(head -n 1 "$filename")
+    contents=$(tail -n +2 "$filename")
+    if [[ "$shebang" == *python* ]]; then 
+      extension=py
+      echo "Applying header for python shebang to file: $filename"
+    elif [[ "$shebang" == *bash* ]]; then
+      extension=bash
+      echo "Applying header for bash shebang to file: $filename"
+    else
+      echo "Unknown shebang [$shebang] in file: $filename"
+      continue
+    fi
+    header_filename="$HEADER_PATH/$extension"
+  else
+    # Non-executable, get type from extension.
+    contents=$(< "$filename")
+    header_filename="$HEADER_PATH/$extension"
+    if [[ ! -f "$header_filename" ]]; then
+      echo "No header found for type [$extension] for file: $filename" 
+      continue
+    fi
+    echo "Applying new header of type [$extension] to file: $filename" 
+  fi
+ 
+  # Template configuration
+  cat << EOF > /tmp/header_config.py
+user="$(git config --get user.name)"
+email="$(git config --get user.email)"
+year="$(date +%Y)"
+filename="$base_filename"  
+EOF
+
+header=$(empy -F/tmp/header_config.py "$header_filename")
+
+out="/tmp/$base_filename"
+rm -f "$out"
+touch "$out"
+
+if [ -n "$shebang" ]; then
+  echo "$shebang" >> "$out"
+fi
+
+echo "$header" >> "$out"
+echo "$contents" >> "$out"
+
+done
