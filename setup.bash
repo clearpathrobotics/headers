@@ -19,7 +19,7 @@ fi
 
 echo "Creating ~/bin/use_headers"
 cat << EOF > ${HOME}/bin/use_headers
-HEADERS_BASE_PATH="$HEADERS_BASE_PATH" $HEADERS_BASE_PATH/use_headers $*
+HEADERS_BASE_PATH="$HEADERS_BASE_PATH" $HEADERS_BASE_PATH/use_headers \$*
 EOF
 chmod +x ${HOME}/bin/use_headers
 

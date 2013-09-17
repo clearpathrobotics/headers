@@ -11,7 +11,7 @@ if [[ "$#" == "0" ]]; then
   exit 1
 fi
 
-cat << EOF > /bin/apply_headers
-HEADERS_PATH=$HEADERS_BASE_PATH/$1 $HEADERS_BASE_PATH/apply_headers $*
+cat << EOF > ${HOME}/bin/apply_headers
+HEADERS_PATH=$HEADERS_BASE_PATH/$1 $HEADERS_BASE_PATH/apply_headers \$*
 EOF
 chmod +x ${HOME}/bin/apply_headers
