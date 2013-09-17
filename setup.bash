@@ -25,7 +25,7 @@ HEADERS_BASE_PATH=${HOME}/.headers
 
 if [ -d "$HEADERS_BASE_PATH" ]; then
   cd "$HEADERS_BASE_PATH"
-  git remote -v | grep -q origin.*github\.com/mikepurvis/headers
+  git remote -v | grep -q origin.*github\.com/clearpathrobotics/headers
   if [ "$?" == "0" ]; then
     echo "Repo already present in $HEADERS_BASE_PATH, skipping clone."
   else
@@ -35,7 +35,7 @@ if [ -d "$HEADERS_BASE_PATH" ]; then
   fi
 else
   echo "Cloning repo to $HEADERS_BASE_PATH"
-  git clone https://github.com/mikepurvis/headers $HEADERS_BASE_PATH
+  git clone https://github.com/clearpathrobotics/headers $HEADERS_BASE_PATH
 fi
 
 echo "Creating ~/bin/use_headers"

@@ -3,7 +3,7 @@ headers
 
 Easy script to apply license headers to source files. Set me up in ~/.headers like so:
 
-    wget https://raw.github.com/mikepurvis/headers/master/setup.bash -O - | bash
+    wget https://raw.github.com/clearpathrobotics/headers/master/setup.bash -O - | bash
 
 Select headers to use:
 
