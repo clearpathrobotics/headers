@@ -3,13 +3,13 @@
 
 if [[ "$#" == "0" ]]; then
   echo "Usages:"
-  echo "  apply_header file1 file2 .."
-  echo "  apply_header --recurse" 
+  echo "  apply_headers file1 file2 .."
+  echo "  apply_headers --recurse" 
   exit 1
 fi
 
-if [[ "$HEADER_PATH" == "" ]]; then
-  echo "Please set \$HEADER_PATH environment variable."
+if [[ "$HEADERS_PATH" == "" ]]; then
+  echo "Please set \$HEADERS_PATH environment variable."
   exit 1
 fi
 
@@ -54,11 +54,11 @@ for filename in ${filenames}; do
       echo "Unknown shebang [$shebang] in file: $filename"
       continue
     fi
-    header_filename="$HEADER_PATH/$extension"
+    header_filename="$HEADERS_PATH/$extension"
   else
     # Non-executable, get type from extension.
     contents=$(< "$filename")
-    header_filename="$HEADER_PATH/$extension"
+    header_filename="$HEADERS_PATH/$extension"
     if [[ ! -f "$header_filename" ]]; then
       echo "No header found for type [$extension] for file: $filename" 
       continue

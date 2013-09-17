@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [[ "$HEADERS_BASE_PATH" == "" ]]; then
+  echo "Please set \$HEADERS_BASE_PATH environment variable."
+  exit 1
+fi
+
+if [[ "$#" == "0" ]]; then
+  echo "Usage:"
+  echo "  use_headers bsd"
+  exit 1
+fi
+
+cat << EOF > /bin/apply_headers
+HEADERS_PATH=$HEADERS_BASE_PATH/$1 $HEADERS_BASE_PATH/apply_headers $*
+EOF
+chmod +x ${HOME}/bin/apply_headers
