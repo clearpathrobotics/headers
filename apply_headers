@@ -76,7 +76,8 @@ EOF
 
 header=$(empy -F/tmp/header_config.py "$header_filename")
 
-out="/tmp/$base_filename"
+#out="/tmp/$base_filename"
+out="$filename"
 rm -f "$out"
 touch "$out"
 
