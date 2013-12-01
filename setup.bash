@@ -41,6 +41,7 @@ fi
 if [ ! -d "${HOME}/bin" ]; then
     echo "Creating ~/bin"
     mkdir ${HOME}/bin
+    echo "Warning: Because ~/bin did not already exist, you will need to log out and in again for it to be on your PATH."
 fi
 echo "Creating ~/bin/use_headers"
 cat << EOF > ${HOME}/bin/use_headers
