@@ -38,6 +38,10 @@ else
   git clone https://github.com/clearpathrobotics/headers $HEADERS_BASE_PATH
 fi
 
+if [ ! -d "${HOME}/bin" ]; then
+    echo "Creating ~/bin"
+    mkdir ${HOME}/bin
+fi
 echo "Creating ~/bin/use_headers"
 cat << EOF > ${HOME}/bin/use_headers
 HEADERS_BASE_PATH="$HEADERS_BASE_PATH" $HEADERS_BASE_PATH/use_headers \$*
