@@ -13,5 +13,5 @@ And then apply them to known filetypes in a list or tree:
 
     apply_headers file1 file2 file3
     apply_headers *  
-    apply_headers --recursive
+    apply_headers --recurse
 
