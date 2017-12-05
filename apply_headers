@@ -1,5 +1,5 @@
 #!/bin/bash
-# Software License Agreement (BSD) 
+# Software License Agreement (BSD)
 #
 # Author    Mike Purvis <mpurvis@clearpathrobotics.com>
 # Copyright (c) 2013, Clearpath Robotics, Inc., All rights reserved.
@@ -24,7 +24,7 @@
 if [[ "$#" == "0" ]]; then
   echo "Usages:"
   echo "  apply_headers file1 file2 .."
-  echo "  apply_headers --recurse" 
+  echo "  apply_headers --recurse"
   exit 1
 fi
 
@@ -64,7 +64,7 @@ for filename in ${filenames}; do
     # Executable file, get type from shebang
     shebang=$(head -n 1 "$filename")
     contents=$(tail -n +2 "$filename")
-    if [[ "$shebang" == *python* ]]; then 
+    if [[ "$shebang" == *python* ]]; then
       extension=py
       echo "Applying header for python shebang to file: $filename"
     elif [[ "$shebang" == *bash* ]]; then
@@ -80,18 +80,18 @@ for filename in ${filenames}; do
     contents=$(< "$filename")
     header_filename="$HEADERS_PATH/$extension"
     if [[ ! -f "$header_filename" ]]; then
-      echo "No header found for type [$extension] for file: $filename" 
+      echo "No header found for type [$extension] for file: $filename"
       continue
     fi
-    echo "Applying new header of type [$extension] to file: $filename" 
+    echo "Applying new header of type [$extension] to file: $filename"
   fi
- 
+
   # Template configuration
   cat << EOF > /tmp/header_config.py
 user="$(git config --get user.name)"
 email="$(git config --get user.email)"
 year="$(date +%Y)"
-filename="$base_filename"  
+filename="$base_filename"
 EOF
 
 header=$(empy -F/tmp/header_config.py "$header_filename")
