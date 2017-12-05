@@ -1,5 +1,5 @@
 #!/bin/bash
-# Software License Agreement (BSD) 
+# Software License Agreement (BSD)
 #
 # Author    Mike Purvis <mpurvis@clearpathrobotics.com>
 # Copyright (c) 2013, Clearpath Robotics, Inc., All rights reserved.
