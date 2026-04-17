@@ -9,6 +9,8 @@ Select headers to use:
 
     use_headers bsd
 
+Available header sets: `bsd`, `apache2`, `prop`.
+
 And then apply them to known filetypes in a list or tree:
 
     apply_headers file1 file2 file3
